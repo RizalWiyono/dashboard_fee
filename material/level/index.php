@@ -8,13 +8,16 @@ if(!isset($_SESSION['email']) ) {
     if($_SESSION['role'] == 'User'){
         header('location: ../team-viewer/');
     }
+    elseif($_SESSION['role'] == 'Analytics'){
+        header('location: ../dashboard/');
+    }
 }
 
     include '../../src/connection/connection.php';
 ?>
 <html>
 <head>
-    <title>Fee RRGraph - User Permission</title> 
+    <title>Fee RRGraph - Level</title> 
     <meta charset="utf-8">
     <link rel="shortcut icon" href="../../src/image/Group 38.png">
 
@@ -33,7 +36,7 @@ if(!isset($_SESSION['email']) ) {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous"><link rel="stylesheet" href="../../src/css/bootstrap.min.css">
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
     
-</head>         
+</head>
 <body>
     <div class="grid-content">
         <nav align="center">
@@ -92,9 +95,7 @@ if(!isset($_SESSION['email']) ) {
                             </h1>
 
                             <div class="main-search" align="right">
-                            <a href="../level/" class="btn-level mr-3">level</a>
-                            <a href="../input_employee/" class="btn-level mr-3">Input Team</a>
-
+                                <a href="" class="btn-level mr-3">Level</a>
                                 <?php
                                 if(isset($_GET['id'])){
                                 ?>
@@ -120,109 +121,150 @@ if(!isset($_SESSION['email']) ) {
                                     <table class="table-team table" id="table">
                                         <thead>
                                             <tr class="title-table">
-                                                <th scope="col">Email</th>
-                                                <th scope="col">Flip Id</th>
-                                                <th scope="col">Password</th>
-                                                <th scope="col" >Level</th>
+                                                <th scope="col">Title</th>
+                                                <th scope="col">Capability</th>
                                                 <th scope="col" class="text-right">Action</th>
                                             </tr>
                                         </thead>
 
                                         <tbody>
                                             <?php
-                                            $query_biodata  = mysqli_query($connect, "SELECT tb_biodata.nama, tb_account.id_account, tb_account.email, tb_account.pass, flip_id, tb_account.role, tb_account.id_nama FROM tb_account INNER JOIN tb_biodata ON tb_account.id_nama=tb_biodata.id_nama");
-                                            while($row = mysqli_fetch_array($query_biodata)){
-                                            ?>
-                                            <tr>
-                                                <?php
-                                                error_reporting(0);
-                                                if($row['id_nama'] == $_GET['edit']){
+                                            error_reporting(0);
+                                            $query_level  = mysqli_query($connect, "SELECT * FROM tb_level ORDER BY level_name ASC");
+                                            while($row = mysqli_fetch_array($query_level)){
+                                                if($_GET['edit'] == $row['id_level']){
                                                 ?>
-                                                <td>
-                                                    <form class="float-right" action="process/input_data.php" method="POST">
+                                                    <tr>
+                                                        <td>
+                                                            <form action="process/input_data.php" method="POST">
+                                                            <input class="d-none" name="param_id" type="text" value="<?=$row['id_level']?>">
+                                                            <input class="form-control" name="level_name" type="text" value="<?=$row['level_name']?>">
+                                                        </td>
+                                                        <td>
+                                                            <div class="checkbox">   
+                                                                <?php
+                                                                if($row['payroll_view'] == 'Active'){
+                                                                ?>
+                                                                    <label class="container align-self-center">Payroll View<input type="checkbox" value="Active" name="payroll_view" checked ><span class="checkmark"></span></label>
+                                                                <?php
+                                                                }else{
+                                                                ?>
+                                                                    <label class="container align-self-center">Payroll View<input type="checkbox" value="Active" name="payroll_view" ><span class="checkmark"></span></label>
+                                                                <?php
+                                                                }
+                                                                ?>
 
-                                                        <input class="d-none" type="text" name="param" value="edit">
-                                                        <input class="d-none" type="text" name="id_n" value="<?=$row['id_nama']?>">
-                                                        <input class="d-none" type="text" name="id_a" value="<?=$row['id_account']?>">
+                                                                <?php
+                                                                if($row['payroll_admin'] == 'Active'){
+                                                                ?>
+                                                                    <label class="container align-self-center">Payroll Admin<input type="checkbox" value="Active" name="payroll_admin" checked ><span class="checkmark"></span></label>
+                                                                <?php
+                                                                }else{
+                                                                ?>
+                                                                    <label class="container align-self-center">Payroll Admin<input type="checkbox" value="Active" name="payroll_admin" ><span class="checkmark"></span></label>
+                                                                <?php
+                                                                }
+                                                                ?>
+                                                                
+                                                                <?php
+                                                                if($row['dashboard'] == 'Active'){
+                                                                ?>
+                                                                    <label class="container"><input type="checkbox" value="Active" name="dashboard" checked >Dashboard<span class="checkmark"></span></label>                                                            
+                                                                <?php
+                                                                }else{
+                                                                ?>
+                                                                    <label class="container"><input type="checkbox" value="Active" name="dashboard" >Dashboard<span class="checkmark"></span></label>                                                            
+                                                                <?php
+                                                                }
+                                                                ?>                                                          
+                                                            </div> 
+                                                        </td>   
 
-                                                        <input autofocus type="text" class="form-control inp-height" name="email" id="" value="<?=$row['email']?>">
-                                                </td>
-                                                <td>
-                                                        <input type="text" class="form-control inp-height" name="flip_id" id="" value="<?=$row['flip_id']?>">
-                                                </td>
-                                                <td>
-                                                        <input type="password" class="form-control inp-height" name="password" id="" value="<?=$row['pass']?>">
-                                                </td>
-                                                <td>
-                                                        <select value="<?=$row['role']?>" name="role" class="form-control inp-height" id="" style="width:50%;">
-                                                            <option selected ><?=$row['role']?></option>
-                                                            <option >Admin</option>
-                                                            <option >Analytics</option>
-                                                            <option >User</option>
-                                                        </select>
-                                                </td>
-                                                <td class="text-right">
-                                                        <input type="submit" class="btn-save-user" name="" id="" value="Save">
-                                                    </form>
-                                                </td>
+                                                        <td class="text-right">
+                                                            <input type="submit" class="btn-save-user" name="" id="" value="Save">
+                                                            </form>
+                                                        </td>
+                                                    </tr>
                                                 <?php
                                                 }else{
-                                                ?>
-                                                <td><?=$row['email']?></td>
-                                                <td><?=$row['flip_id']?></td>
-                                                <td>
-                                                    <input class="pass-view-user" disabled type="password" name="" id="" value="<?=$row['pass']?>">
-                                                </td>
-                                                <td><?=$row['role']?> </td>
-                                                      
-                                                <td>
-                                                    <form class="float-right ml-2" action="?id=<?=$row['id_nama']?>" method="POST">
-                                                        <?php
-                                                        if($row['id_nama'] == $_GET['id']){
-                                                        ?>
-                                                        <button class="btn-user-arrow-active"></button>
-                                                        <?php
-                                                        }else{
-                                                        ?>
-                                                        <button class="btn-user-arrow"></button>
-                                                        <?php
-                                                        }
-                                                        ?>
-                                                    </form>
+                                                    ?>
+                                                    <tr>
+                                                        <td>
+                                                            <label for=""><b><?=$row['level_name']?></b></label>
 
-                                                    <!-- <form class="float-right ml-2" action="" method="POST"> -->
-                                                        <button class="float-right ml-2 btn-user-delete" data-toggle="modal" data-target="#editModal<?=$row['id_nama']?>"></button>
-                                                    <!-- </form> -->
+                                                        </td>
+                                                        <td>
+                                                            <div class="checkbox">   
+                                                                <?php
+                                                                if($row['payroll_view'] == 'Active'){
+                                                                ?>
+                                                                    <label class="container align-self-center">Payroll View<input type="checkbox" value="Active" name="payroll_view" checked disabled><span class="checkmark"></span></label>
+                                                                <?php
+                                                                }else{
+                                                                ?>
+                                                                    <label class="container align-self-center">Payroll View<input type="checkbox" value="Active" name="payroll_view" disabled><span class="checkmark"></span></label>
+                                                                <?php
+                                                                }
+                                                                ?>
 
-                                                    <div align="center" class="modal fade" id="editModal<?=$row['id_nama']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                        <div class="modal-dialog modal-dialog-centered">
-                                                            <div class="modal-content">
-                                                                <div class="modal-body">
-                                                                    <form action="process/input_data.php" method="POST">
-                                                                        <input class="d-none" type="text" name="param" value="delete">
-                                                                        <input class="d-none" type="text" name="id" value="<?=$row['id_account']?>">
+                                                                <?php
+                                                                if($row['payroll_admin'] == 'Active'){
+                                                                ?>
+                                                                    <label class="container align-self-center">Payroll Admin<input type="checkbox" value="Active" name="payroll_admin" checked disabled><span class="checkmark"></span></label>
+                                                                <?php
+                                                                }else{
+                                                                ?>
+                                                                    <label class="container align-self-center">Payroll Admin<input type="checkbox" value="Active" name="payroll_admin" disabled><span class="checkmark"></span></label>
+                                                                <?php
+                                                                }
+                                                                ?>
+                                                                
+                                                                <?php
+                                                                if($row['dashboard'] == 'Active'){
+                                                                ?>
+                                                                    <label class="container"><input type="checkbox" value="Active" name="dashboard" checked disabled>Dashboard<span class="checkmark"></span></label>                                                            
+                                                                <?php
+                                                                }else{
+                                                                ?>
+                                                                    <label class="container"><input type="checkbox" value="Active" name="dashboard" disabled>Dashboard<span class="checkmark"></span></label>                                                            
+                                                                <?php
+                                                                }
+                                                                ?>                                                          
+                                                            </div> 
+                                                        </td>   
 
-                                                                        <img src="../../src/image/ALARM-IC.svg" alt="">
+                                                        <td>
+                                                            <!-- <form class="float-right ml-2" action="" method="POST"> -->
+                                                                <button class="float-right ml-2 btn-user-delete" data-toggle="modal" data-target="#editModal<?=$row['id_level']?>"></button>
+                                                            <!-- </form> -->
 
-                                                                        <p>Are you sure you want to delete</br>the login data for this account?</p>
-                                                                        <h1><?=$row['flip_id']?></h1>
+                                                            <div align="center" class="modal fade" id="editModal<?=$row['id_level']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                <div class="modal-dialog modal-dialog-centered">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-body">
+                                                                            <form action="process/input_data.php" method="POST">
+                                                                                <input class="d-none" type="text" name="param" value="delete">
+                                                                                <input class="d-none" type="text" name="id" value="<?=$row['id_account']?>">
 
-                                                                        <button>Delete Now!</button>
-                                                                    </form>
+                                                                                <img src="../../src/image/ALARM-IC.svg" alt="">
+
+                                                                                <p>Are you sure you want to delete</br>the login data for this account?</p>
+                                                                                <h1><?=$row['flip_id']?></h1>
+
+                                                                                <button>Delete Now!</button>
+                                                                            </form>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                    </div>
 
-                                                    <form class="float-right" action="?edit=<?=$row['id_nama']?>&&id=<?=$row['id_nama']?>" method="POST">
-                                                        <button class="btn-user-edit"></button>
-                                                    </form>
-                                                </td>
-                                                <?php
+                                                            <form class="float-right" action="?edit=<?=$row['id_level']?>" method="POST">
+                                                                <button class="btn-user-edit"></button>
+                                                            </form>
+                                                        </td>
+                                                    </tr>
+                                                <?php 
                                                 }
-                                                ?>
-                                            </tr>
-                                            <?php
                                             }
                                             ?>
                                         </tbody>
@@ -236,7 +278,7 @@ if(!isset($_SESSION['email']) ) {
                 </div>
             </div>
         </main>
-
+        
         <main class="main-right">
             <div class="main-container">
                 <div class="main-content-right" align="left">
@@ -377,7 +419,6 @@ if(!isset($_SESSION['email']) ) {
     <script type="text/javascript" src="../../src/js/tooltip.js"></script> 
     <script type="text/javascript" src="../../src/js/main.js"></script> 
     <script type="text/javascript" src="//cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script> 
-    <script type="text/javascript" src="../../src/js/datatables.js"></script> 
 
 </body>
 </html>

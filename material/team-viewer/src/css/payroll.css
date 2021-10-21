@@ -1,0 +1,745 @@
+@media (min-width: 992px){
+    body {
+        background-color: #F4F4F4 !important;
+        margin: 0;
+        color: #151515;
+    }
+
+    .main {
+        display: flex;
+        padding: 0.5%;
+    }
+
+    nav {
+        top: -300px;
+    }
+
+    /* Tooltips */
+    .tooltip-inner {
+        background-color: #FFF !important;
+        color: #000 !important;
+        box-shadow: 0px 20px 30px rgba(2, 2, 2, 0.15) !important;
+        font-weight: 600 !important;
+        font-family: "Poppins" !important;
+    }
+
+    .tooltip .arrow {
+        display: none !important;
+    }
+
+    /* Sidebar */
+    .main .sidebar-py {
+        width: 4%;
+        background-color: #151515;
+        text-align: center;
+        border-radius: 10px;
+        height: 98%;
+        position: fixed;
+        display: block;
+    }
+
+    .main .sidebar-py.phone {
+        display: none;
+    }
+
+    .main .sidebar-py ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .main .sidebar-py ul li {
+        margin: 10% 0;
+        padding: 20%;
+        height: 7.5%;
+    }
+
+    .main .sidebar-py ul li a svg {
+        width: 100%;
+        padding: 2%;
+    }
+
+    .main .sidebar-py ul li a {
+        border-radius: 5px;
+        display: block;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: 0.3s;
+    }
+
+    .main .sidebar-py ul .icon-menu-sidebar a:hover {
+        background-color: #FFF;
+        transition: 0.3s;
+    }
+
+    .main .sidebar-py ul .icon-menu-sidebar a:hover svg path {
+        background-color: #FFF;
+        fill: #151515;
+        transition: 0.3s;
+    }
+
+    .icon-menu-sidebar.icon-bottom {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+    }
+
+    .icon-menu-sidebar.active a, .icon-menu-sidebar.active svg path{
+        background-color: #FFF;
+        fill: #151515;
+        transition: 0.3s;
+    }
+
+    /* Main Content */
+    .main .main-content {
+        width: 97%;
+        margin: 1% 1% 0 5.5%;
+        font-family: "Poppins";
+    }
+
+    .main .main-content header {
+        display: flex; 
+        justify-content: space-between;
+    }
+
+    .main .main-content header h1 {
+        font-size: 25px;
+        font-weight: 700;
+        margin: 0;
+    }
+
+    .main .main-content header h1 strong {
+        font-weight: 700;
+    }
+
+    .main-content header .range-date {
+        position: relative;
+    }
+
+    .main-content header .range-date select {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+
+        width: 185px;
+        border: 1px solid #D1D1D1;
+        cursor: pointer;
+        outline: none;
+        border-radius: 4px;
+        padding: 0 4px;
+        background-color: transparent;
+        transition: 0.3s;
+
+        font-family: "Poppins";
+        color: #52575C;
+    }
+
+    header .range-date select:hover, header .range-date select:focus {
+        transition: 0.3s;
+        border: 1px solid #005CF0;
+    }
+
+    .main .main-content main {
+        background-color: #FFF;
+        border-radius: 10px;
+        margin-top: 30px;
+        padding: 1.5% 2% 5% 2%;
+    }
+
+    .main .main-content main h3 {
+        font-size: 17px;
+        color: #005CF0;
+        font-weight: 700;
+    }
+
+    .main .main-content main h1 {
+        font-size: 30px;
+        font-weight: 700;
+    }
+
+    .main .main-content main p {
+        font-size: 15px;
+        font-weight: 700;
+    }
+
+    .main .main-content main p span {
+        font-weight: 500;
+    }
+
+    .main .main-content .content-icon {
+        width: 35px;
+        height: 35px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #C8DDFF;
+        border-radius: 4px;
+    }
+
+    .main .main-content .list-content {
+        width: 79%;
+        margin-left: 5%;
+    }
+
+    .main .main-content .list-content .desc-content {
+        display: flex;
+        justify-content: space-between;
+        border-bottom: 1px solid #D3D3D3;
+        margin-top: 15px;
+    }
+
+    .main .main-content .list-content .desc-content h5 {
+        font-size: 15px;
+        color: #505050;
+    }
+
+    .main .main-content  .range-date .btn-attendance {
+        border-radius: 5px;
+        background-color: transparent;
+        border: 1px solid #151515;
+        font-size: 13px;
+        font-weight: 700;
+        color: #151515;
+        padding: 3% 10px;
+        transition: 0.3s;
+        width: 100%;
+    }
+
+    .main .main-content  .range-date .btn-attendance:hover {
+        background-color: #151515;
+        border: 1px solid #151515;
+        color: #FFE121;
+    }
+
+    .tb-absent table th {
+        font-family: "Poppins" !important;
+        font-size: 15px;
+    }
+
+    .tb-absent table td {
+        font-family: "Poppins" !important;
+        font-size: 13px;
+    }
+
+    /* Modal */
+
+    .modal-title {
+        font-family: "Poppins" !important;
+        font-weight: 700;
+        color: #F1969C;
+    }
+
+    .modal-body button {
+        background-color: transparent ; 
+        border: 0;
+        font-size: 50px;
+        outline: none !important;
+        transition: 0.3s;
+    }
+    
+    .modal-body button:hover {
+        text-shadow: 0 0 5px #151515;
+    }
+}
+
+@media (min-width: 575.99px) and (max-width: 991.98px){
+    body {
+        background-color: #F4F4F4 !important;
+        margin: 0;
+        color: #151515;
+    }
+
+    .main {
+        display: flex;
+        padding: 0.5%;
+    }
+
+    nav {
+        top: -300px;
+    }
+
+    /* Tooltips */
+    .tooltip-inner {
+        background-color: #FFF !important;
+        color: #000 !important;
+        box-shadow: 0px 20px 30px rgba(2, 2, 2, 0.15) !important;
+        font-weight: 600 !important;
+        font-family: "Poppins" !important;
+    }
+
+    .tooltip .arrow {
+        display: none !important;
+    }
+
+    /* Sidebar */
+    .main .sidebar-py.desktop {
+        width: 4%;
+        background-color: #151515;
+        text-align: center;
+        border-radius: 10px;
+        height: 98%;
+        position: fixed;
+        display: block;
+    }
+
+    .main .sidebar-py.phone {
+        display: none;
+    }
+
+    .main .sidebar-py ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .main .sidebar-py ul li {
+        margin: 10% 0;
+        padding: 20%;
+        height: 7.5%;
+    }
+
+    .main .sidebar-py ul li a svg {
+        width: 100%;
+        padding: 2%;
+    }
+
+    .main .sidebar-py ul li a {
+        border-radius: 5px;
+        display: block;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: 0.3s;
+    }
+
+    .main .sidebar-py ul .icon-menu-sidebar a:hover {
+        background-color: #FFF;
+        transition: 0.3s;
+    }
+
+    .main .sidebar-py ul .icon-menu-sidebar a:hover svg path {
+        background-color: #FFF;
+        fill: #151515;
+        transition: 0.3s;
+    }
+
+    .icon-menu-sidebar.icon-bottom {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+    }
+
+    .icon-menu-sidebar.active a, .icon-menu-sidebar.active svg path{
+        background-color: #FFF;
+        fill: #151515;
+        transition: 0.3s;
+    }
+
+    /* Main Content */
+    .main .main-content {
+        width: 97%;
+        margin: 1% 1% 0 5.5%;
+        font-family: "Poppins";
+    }
+
+    .main .main-content header {
+        display: flex; 
+        justify-content: space-between;
+    }
+
+    .main .main-content header h1 {
+        font-size: 25px;
+        font-weight: 700;
+        margin: 0;
+    }
+
+    .main .main-content header h1 strong {
+        font-weight: 700;
+    }
+
+    .main-content header .range-date {
+        position: relative;
+    }
+
+    .main-content header .range-date select {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+
+        width: 185px;
+        border: 1px solid #D1D1D1;
+        cursor: pointer;
+        outline: none;
+        border-radius: 4px;
+        padding: 0 4px;
+        background-color: transparent;
+        transition: 0.3s;
+
+        font-family: "Poppins";
+        color: #52575C;
+    }
+
+    header .range-date select:hover, header .range-date select:focus {
+        transition: 0.3s;
+        border: 1px solid #005CF0;
+    }
+
+    .main .main-content main {
+        background-color: #FFF;
+        border-radius: 10px;
+        margin-top: 30px;
+        padding: 1.5% 2% 5% 2%;
+    }
+
+    .main .main-content main h3 {
+        font-size: 17px;
+        color: #005CF0;
+        font-weight: 700;
+    }
+
+    .main .main-content main h1 {
+        font-size: 30px;
+        font-weight: 700;
+    }
+
+    .main .main-content main p {
+        font-size: 15px;
+        font-weight: 700;
+    }
+
+    .main .main-content main p span {
+        font-weight: 500;
+    }
+
+    .main .main-content .content-icon {
+        width: 35px;
+        height: 35px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #C8DDFF;
+        border-radius: 4px;
+    }
+
+    .main .main-content .list-content {
+        width: 79%;
+        margin-left: 5%;
+    }
+
+    .main .main-content .list-content .desc-content {
+        display: flex;
+        justify-content: space-between;
+        border-bottom: 1px solid #D3D3D3;
+        margin-top: 15px;
+    }
+
+    .main .main-content .list-content .desc-content h5 {
+        font-size: 15px;
+        color: #505050;
+    }
+
+    .main .main-content  .range-date .btn-attendance {
+        border-radius: 5px;
+        background-color: transparent;
+        border: 1px solid #151515;
+        font-size: 13px;
+        font-weight: 700;
+        color: #151515;
+        padding: 0.5% 10px;
+        transition: 0.3s;
+    }
+
+    .main .main-content  .range-date .btn-attendance:hover {
+        background-color: #151515;
+        border: 1px solid #151515;
+        color: #FFE121;
+    }
+
+    .tb-absent table th {
+        font-family: "Poppins" !important;
+        font-size: 13px;
+    }
+
+    .tb-absent table td {
+        font-family: "Poppins" !important;
+        font-size: 11px;
+    }
+
+    /* Modal */
+
+    .modal-title {
+        font-family: "Poppins" !important;
+        font-weight: 700;
+        color: #F1969C;
+    }
+
+    .modal-body button {
+        background-color: transparent ; 
+        border: 0;
+        font-size: 50px;
+        outline: none !important;
+        transition: 0.3s;
+    }
+    
+    .modal-body button:hover {
+        text-shadow: 0 0 5px #151515;
+    }
+}
+
+@media (max-width: 575.98px) {
+    body {
+        background-color: #F4F4F4 !important;
+        margin: 0;
+        color: #151515;
+    }
+
+    .main {
+        display: flex;
+        padding: 0.5% 2% 0.5% 0.5%;
+    }
+
+    nav {
+        transition: 0.3s;
+        top: -300px;
+    }
+
+    /* Tooltips */
+    .tooltip-inner {
+        background-color: #FFF !important;
+        color: #000 !important;
+        box-shadow: 0px 20px 30px rgba(2, 2, 2, 0.15) !important;
+        font-weight: 600 !important;
+        font-family: "Poppins" !important;
+    }
+
+    .tooltip .arrow {
+        display: none !important;
+    }
+
+    /* Sidebar */
+    .main .sidebar-py.desktop {
+        display: none;
+    }
+
+    .main .sidebar-py.phone {
+        width: 8%;
+        background-color: #151515;
+        text-align: center;
+        border-radius: 3px;
+        height: 8vw;
+        position: fixed;
+        display: block;
+    }
+
+    .main .sidebar-py ul {
+        list-style: none;
+        padding: 0;
+        margin-top: 10px;
+    }
+
+    .main .sidebar-py ul li {
+        margin: 10% 0;
+        padding: 20%;
+        height: 7.5%;
+    }
+
+    .main .sidebar-py ul li a svg {
+        width: 100%;
+        padding: 2%;
+    }
+
+    .icon-menu-sidebar {
+        display: none;
+    }
+
+    .main .sidebar-py ul li a {
+        border-radius: 5px;
+        display: block;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: 0.3s;
+    }
+
+    .main .sidebar-py ul .icon-menu-sidebar a:hover {
+        background-color: #FFF;
+        transition: 0.3s;
+    }
+
+    .main .sidebar-py ul .icon-menu-sidebar a:hover svg path {
+        background-color: #FFF;
+        fill: #151515;
+        transition: 0.3s;
+    }
+
+    .icon-menu-sidebar.icon-bottom {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+    }
+
+    .icon-menu-sidebar.active a, .icon-menu-sidebar.active svg path{
+        background-color: #FFF;
+        fill: #151515;
+        transition: 0.3s;
+    }
+
+    /* Main Content */
+    .main .main-content {
+        width: 97%;
+        margin: 1% 1% 0 9.5%;
+        font-family: "Poppins";
+    }
+
+    .main .main-content.absent {
+        width: 88%;
+        margin: 1% 1% 0 9.5%;
+        font-family: "Poppins";
+    }
+
+    .main .main-content header {
+        display: flex; 
+        justify-content: space-between;
+    }
+
+    .main .main-content header h1 {
+        font-size: 20px;
+        font-weight: 700;
+        margin: 0;
+    }
+
+    .main .main-content header h1 strong {
+        font-weight: 700;
+    }
+
+    .main-content header .range-date {
+        position: absolute;
+        top: 70px;
+    }
+
+    .main-content header .range-date select {
+        position: relative;
+        bottom: 0;
+        right: 0;
+
+        width: 125px;
+        border: 1px solid #D1D1D1;
+        cursor: pointer;
+        outline: none;
+        border-radius: 4px;
+        padding: 0 4px;
+        background-color: transparent;
+        transition: 0.3s;
+        font-size: 10px;
+        font-family: "Poppins";
+        color: #52575C;
+    }
+
+    header .range-date select:hover, header .range-date select:focus {
+        transition: 0.3s;
+        border: 1px solid #005CF0;
+    }
+
+    .main .main-content main {
+        background-color: #FFF;
+        border-radius: 10px;
+        margin-top: 50px;
+        padding: 5% 5% 5% 5%;
+    }
+
+    .main .main-content main h3 {
+        font-size: 12px;
+        color: #005CF0;
+        font-weight: 700;
+    }
+
+    .main .main-content main h1 {
+        font-size: 20px;
+        font-weight: 700;
+    }
+
+    .main .main-content main p {
+        font-size: 10px;
+        font-weight: 700;
+    }
+
+    .main .main-content main p span {
+        font-weight: 500;
+    }
+
+    .main .main-content .content-icon {
+        width: 25px;
+        height: 25px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #C8DDFF;
+        border-radius: 4px;
+    }
+
+    .main .main-content .list-content {
+        width: 79%;
+        margin-left: 5%;
+    }
+
+    .main .main-content .list-content .desc-content {
+        display: flex;
+        justify-content: space-between;
+        border-bottom: 1px solid #D3D3D3;
+        margin-top: 15px;
+    }
+
+    .main .main-content .list-content .desc-content h5 {
+        font-size: 15px;
+        color: #505050;
+    }
+
+    .main .main-content  .range-date .btn-attendance {
+        border-radius: 5px;
+        background-color: transparent;
+        border: 1px solid #151515;
+        font-size: 10px;
+        font-weight: 700;
+        color: #151515;
+        padding: 0.5% 10px;
+        transition: 0.3s;
+    }
+
+    .main .main-content  .range-date .btn-attendance:hover {
+        background-color: #151515;
+        border: 1px solid #151515;
+        color: #FFE121;
+    }
+
+    .tb-absent table th {
+        font-family: "Poppins" !important;
+        font-size: 11px;
+    }
+
+    .tb-absent table td {
+        font-family: "Poppins" !important;
+        font-size: 9px;
+    }
+
+    /* Modal */
+
+    .modal-title {
+        font-family: "Poppins" !important;
+        font-weight: 700;
+        color: #F1969C;
+    }
+
+    .modal-body button {
+        background-color: transparent ; 
+        border: 0;
+        font-size: 50px;
+        outline: none !important;
+        transition: 0.3s;
+    }
+    
+    .modal-body button:hover {
+        text-shadow: 0 0 5px #151515;
+    }
+}
