@@ -140,11 +140,41 @@
         border: 1px solid #005CF0;
     }
 
+    .opti-absent {
+        margin-top: 30px;
+        margin-bottom: 5px;
+        cursor: pointer;
+        z-index: 1 !important;
+        position: relative;
+        font-size: 15px;
+    }
+
+    .opti-absent a {
+        text-decoration: none !important;
+        color: #151515;
+        background-color: rgb(238, 238, 238);
+        padding: 10px 10px 15px 10px;
+        border-radius: 5px 5px 0 0;
+    }
+
+    .opti-absent a:hover {
+        background-color: #FFF;
+        color: #151515;
+        font-weight: 600;
+    }
+
+    .opti-absent a.active {
+        background-color: #FFF;
+        font-weight: 600;
+    }
+
     .main .main-content main {
         background-color: #FFF;
         border-radius: 10px;
-        margin-top: 30px;
+        /* margin-top: 30px; */
         padding: 1.5% 2% 5% 2%;
+        z-index: 2 !important;
+        position: relative;
     }
 
     .main .main-content main h3 {
@@ -388,7 +418,7 @@
     .main .main-content main {
         background-color: #FFF;
         border-radius: 10px;
-        margin-top: 30px;
+        /* margin-top: 30px; */
         padding: 1.5% 2% 5% 2%;
     }
 
@@ -591,12 +621,38 @@
         width: 97%;
         margin: 1% 1% 0 9.5%;
         font-family: "Poppins";
+        
     }
 
     .main .main-content.absent {
         width: 88%;
         margin: 1% 1% 0 9.5%;
         font-family: "Poppins";
+    }
+
+    .main .main-content.absent .opti-absent{
+        margin-top: 44px;
+
+    }
+
+    .main .main-content.absent .opti-absent a{
+        text-decoration: none !important;
+        color: #151515;
+        background-color: rgb(238, 238, 238);
+        padding: 5px 5px 10px 5px;
+        border-radius: 5px 5px 0 0;
+        font-size: 12px;
+        z-index: 1 !important;
+        /* position: relative; */
+    }
+    .main .main-content.absent .opti-absent .active{
+        background-color: #FFF;
+        font-weight: 600;
+    }
+    .filterStyle{
+        font-size: 12px;
+        font-weight: 600;    
+        margin-top: -1.5%;
     }
 
     .main .main-content header {
@@ -645,8 +701,11 @@
     .main .main-content main {
         background-color: #FFF;
         border-radius: 10px;
-        margin-top: 50px;
-        padding: 5% 5% 5% 5%;
+        /* margin-top: 50px; */
+        padding: 2% 5% 5% 5%;
+        z-index: 2 !important;
+        position: relative;
+
     }
 
     .main .main-content main h3 {
@@ -742,4 +801,27 @@
     .modal-body button:hover {
         text-shadow: 0 0 5px #151515;
     }
+}
+
+.header-elements {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5px;
+}
+
+.header-elements select {
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 1px solid #BCBCBC;
+    outline: none !important;
+    cursor: pointer;
+    padding: 0 5px;
+}
+
+.header-elements select:focus {
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 1px solid #AA21FF;
+    outline: none !important;
+    cursor: pointer;
 }

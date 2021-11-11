@@ -163,6 +163,7 @@
         </nav>
 
         <div class="main-content absent">
+
             <header>
                 <?php $param_id_nama = $_SESSION['id_nama'];
                 $query_biodata  = mysqli_query($connect, "SELECT * FROM tb_biodata WHERE id_nama='$param_id_nama'");
@@ -199,162 +200,198 @@
                 }?>
             </header>
 
-            <?php $param_id_nama = $_SESSION['id_nama'];
-            $sql_check_pm = mysqli_query($connect, "SELECT * FROM tb_person_responsible WHERE id_nama='$param_id_nama'"); 
-            if(mysqli_num_rows($sql_check_pm) >= 1) {?>
-                <main>
-                    <div class="row">
-                        <!-- Core Elements -->
-                        <div class="col-md-12 mt-2 tb-absent" style="overflow-x: auto; white-space: nowrap;">
-                        <h3 class="title-elements">Validation</h3>
-                            <table class="table table-hover">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Name</th>
-                                        <th scope="col">Explanation</th>
-                                        <th scope="col">Date</th>
-                                        <th scope="col">Time</th>
-                                        <th scope="col">Feeling</th>
-                                        <th scope="col">Status</th>
-                                        <th scope="col">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                <?php $param_id_nama = $_SESSION['id_nama'];
-                                while($data_pm = mysqli_fetch_array($sql_check_pm)){
-                                    $id_params = $data_pm['id_responsible'];
-                                }
-                                $absent  = mysqli_query($connect, "SELECT * FROM tb_absent ORDER BY date DESC");
-                                $no = 1;
-                                while($d_absent = mysqli_fetch_array($absent)){ 
-                                    $parameter_id = $d_absent['id_nama'];
+	<?php $sql_check_pm_s = mysqli_query($connect, "SELECT * FROM tb_person_responsible WHERE id_nama='$param_id_nama'");
+            if(mysqli_num_rows($sql_check_pm_s) >= 1) {?>
 
-                                    if($param_id_nama == 20){
-                                        $query_id = mysqli_query($connect, "SELECT * FROM tb_member WHERE id_nama='$parameter_id'"); 
-                                    }else{
-                                        $query_id = mysqli_query($connect, "SELECT * FROM tb_member WHERE id_nama='$parameter_id' AND id_responsible='$id_params'"); 
-                                    }
-                                    while($data_member = mysqli_fetch_array($query_id)){
-                                // if($id_name == $d_absent['id_nama']){
-                                    $name_param = $d_absent['id_nama'];
-                                    $query_name = mysqli_query($connect, "SELECT * FROM tb_biodata WHERE id_nama='$name_param'"); 
-                                    while($data_name = mysqli_fetch_array($query_name)){
-                                    ?>
-                                    <tr>
-                                        <td><?=$data_name['nama']?></td>
-                                        <td><?=$d_absent['explanation']?></td>
-                                        <td><?=$d_absent['date']?></td>
-                                        <td><?=$d_absent['time']?></td>
-                                        <?php if($d_absent['feeling'] == 'Happy'){ ?>
-                                            <td>&#128513; <strong> <?=$d_absent['feeling']?></strong></td>
-                                        <?php }elseif($d_absent['feeling'] == 'Sad'){ ?>
-                                            <td>&#128546; <strong><?=$d_absent['feeling']?></strong></td>
-                                        <?php }elseif($d_absent['feeling'] == 'Normal'){ ?>
-                                            <td>&#128527; <strong><?=$d_absent['feeling']?></strong></td>
-                                        <?php }elseif($d_absent['feeling'] == 'Angry'){ ?>
-                                            <td>&#128534; <strong><?=$d_absent['feeling']?></strong></td>
-                                        <?php }else{ ?>
-                                            <td><strong><?=$d_absent['feeling']?></strong></td>
-                                        <?php } ?>
+            <div class="opti-absent">
+                <?php if($_GET['action'] == "attendance"){ ?>
+                    <a class="active" href="?action=attendance"><span>Attendance</span></a>
+                    <a href="?action=validation&&filter=All"><span>Validation</span></a>
+                <?php }elseif($_GET['action'] == "validation"){ ?>
+                    <a href="?action=attendance"><span>Attendance</span></a>
+                    <a class="active" href="?action=validation&&filter=All"><span>Validation</span></a>
+                <?php } ?>
+            </div>
+	<?php } ?>
+                <main>
+                    <?php if($_GET['action'] == "validation"){
+                            $param_id_nama = $_SESSION['id_nama'];
+                            $sql_check_pm = mysqli_query($connect, "SELECT * FROM tb_person_responsible WHERE id_nama='$param_id_nama'");
+                            if(mysqli_num_rows($sql_check_pm) >= 1) {?>
+                                <div class="row">
+                                    <!-- Core Elements -->
+                                    <div class="col-md-12 mt-2 tb-absent" style="overflow-x: auto; white-space: nowrap;">
+                                        <div class="header-elements">
+                                            <h3 class="title-elements">Validation</h3>
+                                                <label class="filterStyle" for="">Filter : <select name="filterSelect" id="filterSelect" onchange="location = this.value;">
+                                                    <option value="?action=validation&&filter=All">All</option>
+                                                    <option value="?action=validation&&filter=Today">Today</option>
+                                                    <option value="?action=validation&&filter=Done">Done</option>
+                                                    <option value="?action=validation&&filter=Pending">Pending</option>
+                                                    <option value="?action=validation&&filter=Reject">Reject</option>
+                                                    <option value="" style="display: none;" selected><?=$_GET["filter"]?></option>
+                                                </select></label>
+                                        </div>
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Name</th>
+                                                    <th scope="col">Explanation</th>
+                                                    <th scope="col">Date</th>
+                                                    <th scope="col">Time</th>
+                                                    <th scope="col">Feeling</th>
+                                                    <th scope="col">Status</th>
+                                                    <th scope="col">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            <?php
+                                            $param_id_nama = $_SESSION['id_nama'];
+                                            while($data_pm = mysqli_fetch_array($sql_check_pm)){
+                                                $id_params = $data_pm['id_responsible'];
+                                            }
+                                            if($_GET["filter"] == "All"){
+                                            $absent  = mysqli_query($connect, "SELECT * FROM tb_absent ORDER BY date DESC");
+                                            }else if($_GET["filter"] == "Today"){
+                                                $absent  = mysqli_query($connect, "SELECT * FROM tb_absent WHERE DATE(date)=CURDATE() ORDER BY date DESC");
+                                            }else if($_GET["filter"] == "Done"){
+                                                $absent  = mysqli_query($connect, "SELECT * FROM tb_absent WHERE status = 'Success' ORDER BY date DESC");
+                                            }else if($_GET["filter"] == "Pending"){
+                                                $absent  = mysqli_query($connect, "SELECT * FROM tb_absent WHERE status = 'Pending' ORDER BY date DESC");
+                                            
+                                            }else if($_GET["filter"] == "Reject"){
+                                                $absent  = mysqli_query($connect, "SELECT * FROM tb_absent WHERE status = 'Reject' ORDER BY date DESC");
+                                            }
+                                            $no = 1;
+                                            while($d_absent = mysqli_fetch_array($absent)){ 
+                                                $parameter_id = $d_absent['id_nama'];
+            
+                                                if($param_id_nama == 20){
+                                                    $query_id = mysqli_query($connect, "SELECT * FROM tb_member WHERE id_nama='$parameter_id'"); 
+                                                }else{
+                                                    $query_id = mysqli_query($connect, "SELECT * FROM tb_member WHERE id_nama='$parameter_id' AND id_responsible='$id_params'"); 
+                                                }
+                                                while($data_member = mysqli_fetch_array($query_id)){
+                                            // if($id_name == $d_absent['id_nama']){
+                                                $name_param = $d_absent['id_nama'];
+                                                $query_name = mysqli_query($connect, "SELECT * FROM tb_biodata WHERE id_nama='$name_param'"); 
+                                                while($data_name = mysqli_fetch_array($query_name)){
+                                                ?>
+                                                <tr>
+                                                    <td><?=$data_name['nama']?></td>
+                                                    <td><?=$d_absent['explanation']?></td>
+                                                    <td><?=$d_absent['date']?></td>
+                                                    <td><?=$d_absent['time']?></td>
+                                                    <?php if($d_absent['feeling'] == 'Happy'){ ?>
+                                                        <td>&#128513; <strong> <?=$d_absent['feeling']?></strong></td>
+                                                    <?php }elseif($d_absent['feeling'] == 'Sad'){ ?>
+                                                        <td>&#128546; <strong><?=$d_absent['feeling']?></strong></td>
+                                                    <?php }elseif($d_absent['feeling'] == 'Normal'){ ?>
+                                                        <td>&#128527; <strong><?=$d_absent['feeling']?></strong></td>
+                                                    <?php }elseif($d_absent['feeling'] == 'Angry'){ ?>
+                                                        <td>&#128534; <strong><?=$d_absent['feeling']?></strong></td>
+                                                    <?php }else{ ?>
+                                                        <td><strong><?=$d_absent['feeling']?></strong></td>
+                                                    <?php } ?>
+                                                    
+                                                    
+                                                    <?php
+                                                    if($d_absent['status'] == 'Success'){
+                                                    ?>
+                                                    <td style="font-weight: 700; color: #00C046;"><i class="fa fa-check-circle mr-1" style="color: #00C046;"></i> Success</td>
+                                                    <?php
+                                                    }elseif($d_absent['status'] == 'Pending'){
+                                                    ?>
+                                                    <td style="font-weight: 700; color: #FF7221;"><i class="fa fa-exclamation-circle mr-1" style="color: #FF7221;"></i> Pending</td>
+                                                    <?php
+                                                    }else{ ?>
+                                                    <td style="font-weight: 700; color: red;"><i class="fa fa-times-circle mr-1" style="color: red;"></i> Reject</td>
+                                                    <?php } ?>
+                                                    <td style="display: flex;">
+                                                    <?php if($d_absent['status'] == 'Pending'){ ?>
+                                                        <form class="mr-2" action="process/acc_absent.php" method="POST">
+                                                            <input class="d-none" type="text" name="param-id" value="<?=$d_absent['id_absent']?>">
+                                                            <button style="font-size: 10px;" type="submit" class="btn btn-success">Accept</button>
+                                                        </form>
+                                                        <form action="process/rj_absent.php" method="POST">
+                                                            <input class="d-none" type="text" name="param-id" value="<?=$d_absent['id_absent']?>">
+                                                            <button style="font-size: 10px;" type="submit" class="btn btn-danger">Reject</button>
+                                                        </form>
+                                                    <?php }else{ ?>
+                                                        <strong>Done!</strong>
+                                                    <?php }?>
+                                                    </td>
+                                                </tr>
+                                                
+                                            <?php }
+                                                }
+                                            $no++;
+                                            } ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                        <?php }
+                    }else{ ?>
+                        <div class="row">
+                            <!-- Core Elements -->
+                            <div class="col-md-12 mt-2 tb-absent" style="overflow-x: auto; white-space: nowrap;">
+                                <h3 class="title-elements">Your Attendance History</h3>
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">No.</th>
+                                            <th scope="col">Explanation</th>
+                                            <th scope="col">Date</th>
+                                            <th scope="col">Time</th>
+                                            <th scope="col">Feeling</th>
+                                            <th scope="col">Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tableData">
+                                    <?php $param_id_nama = $_SESSION['id_nama'];
+                                    $absent  = mysqli_query($connect, "SELECT * FROM tb_absent WHERE id_nama='$param_id_nama'");
+                                    $no = 1;
+                                    while($d_absent = mysqli_fetch_array($absent)){ ?>
+                                        <tr>
+                                            <td scope="row"><strong> <?=$no?></strong></td>
+                                            <td><?=$d_absent['explanation']?></td>
+                                            <td><?=$d_absent['date']?></td>
+                                            <td><?=$d_absent['time']?></td>
+                                            <?php if($d_absent['feeling'] == 'Happy'){ ?>
+                                                <td>&#128513; <strong> <?=$d_absent['feeling']?></strong></td>
+                                            <?php }elseif($d_absent['feeling'] == 'Sad'){ ?>
+                                                <td>&#128546; <strong><?=$d_absent['feeling']?></strong></td>
+                                            <?php }elseif($d_absent['feeling'] == 'Normal'){ ?>
+                                                <td>&#128527; <strong><?=$d_absent['feeling']?></strong></td>
+                                            <?php }elseif($d_absent['feeling'] == 'Angry'){ ?>
+                                                <td>&#128534; <strong><?=$d_absent['feeling']?></strong></td>
+                                            <?php }else{ ?>
+                                                <td><strong><?=$d_absent['feeling']?></strong></td>
+                                            <?php } ?>
+                                            
+                                            <?php
+                                            if($d_absent['status'] == 'Success'){
+                                            ?>
+                                            <td style="font-weight: 700; color: #00C046;"><i class="fa fa-check-circle mr-1" style="color: #00C046;"></i> Success</td>
+                                            <?php
+                                            }elseif($d_absent['status'] == 'Pending'){
+                                            ?>
+                                            <td style="font-weight: 700; color: #FF7221;"><i class="fa fa-exclamation-circle mr-1" style="color: #FF7221;"></i> Pending</td>
+                                            <?php
+                                            }else{ ?>
+                                            <td style="font-weight: 700; color: red;"><i class="fa fa-times-circle mr-1" style="color: red;"></i> Reject</td>
+                                            <?php } ?>
+                                        </tr>
                                         
-                                        
-                                        <?php
-                                        if($d_absent['status'] == 'Success'){
-                                        ?>
-                                        <td style="font-weight: 700; color: #00C046;"><i class="fa fa-check-circle mr-1" style="color: #00C046;"></i> Success</td>
-                                        <?php
-                                        }elseif($d_absent['status'] == 'Pending'){
-                                        ?>
-                                        <td style="font-weight: 700; color: #FF7221;"><i class="fa fa-exclamation-circle mr-1" style="color: #FF7221;"></i> Pending</td>
-                                        <?php
-                                        }else{ ?>
-                                        <td style="font-weight: 700; color: red;"><i class="fa fa-times-circle mr-1" style="color: red;"></i> Reject</td>
-                                        <?php } ?>
-                                        <td style="display: flex;">
-                                        <?php if($d_absent['status'] == 'Pending'){ ?>
-                                            <form class="mr-2" action="process/acc_absent.php" method="POST">
-                                                <input class="d-none" type="text" name="param-id" value="<?=$d_absent['id_absent']?>">
-                                                <button style="font-size: 10px;" type="submit" class="btn btn-success">Accept</button>
-                                            </form>
-                                            <form action="process/rj_absent.php" method="POST">
-                                                <input class="d-none" type="text" name="param-id" value="<?=$d_absent['id_absent']?>">
-                                                <button style="font-size: 10px;" type="submit" class="btn btn-danger">Reject</button>
-                                            </form>
-                                        <?php }else{ ?>
-                                            <strong>Done!</strong>
-                                        <?php }?>
-                                        </td>
-                                    </tr>
-                                    
-                                <?php }
-                                    }
-                                $no++;
-                                } ?>
-                                </tbody>
-                            </table>
+                                    <?php $no++;
+                                    } ?>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                    </div>
+                    <?php } ?>
                 </main>
-            <?php } ?>
-            <main>
-                <div class="row">
-                    <!-- Core Elements -->
-                    <div class="col-md-12 mt-2 tb-absent" style="overflow-x: auto; white-space: nowrap;">
-                        <h3 class="title-elements">Your Attendance History</h3>
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th scope="col">No.</th>
-                                    <th scope="col">Explanation</th>
-                                    <th scope="col">Date</th>
-                                    <th scope="col">Time</th>
-                                    <th scope="col">Feeling</th>
-                                    <th scope="col">Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            <?php $param_id_nama = $_SESSION['id_nama'];
-                            $absent  = mysqli_query($connect, "SELECT * FROM tb_absent WHERE id_nama='$param_id_nama'");
-                            $no = 1;
-                            while($d_absent = mysqli_fetch_array($absent)){ ?>
-                                <tr>
-                                    <td scope="row"><strong> <?=$no?></strong></td>
-                                    <td><?=$d_absent['explanation']?></td>
-                                    <td><?=$d_absent['date']?></td>
-                                    <td><?=$d_absent['time']?></td>
-                                    <?php if($d_absent['feeling'] == 'Happy'){ ?>
-                                        <td>&#128513; <strong> <?=$d_absent['feeling']?></strong></td>
-                                    <?php }elseif($d_absent['feeling'] == 'Sad'){ ?>
-                                        <td>&#128546; <strong><?=$d_absent['feeling']?></strong></td>
-                                    <?php }elseif($d_absent['feeling'] == 'Normal'){ ?>
-                                        <td>&#128527; <strong><?=$d_absent['feeling']?></strong></td>
-                                    <?php }elseif($d_absent['feeling'] == 'Angry'){ ?>
-                                        <td>&#128534; <strong><?=$d_absent['feeling']?></strong></td>
-                                    <?php }else{ ?>
-                                        <td><strong><?=$d_absent['feeling']?></strong></td>
-                                    <?php } ?>
-                                    
-                                    <?php
-                                    if($d_absent['status'] == 'Success'){
-                                    ?>
-                                    <td style="font-weight: 700; color: #00C046;"><i class="fa fa-check-circle mr-1" style="color: #00C046;"></i> Success</td>
-                                    <?php
-                                    }elseif($d_absent['status'] == 'Pending'){
-                                    ?>
-                                    <td style="font-weight: 700; color: #FF7221;"><i class="fa fa-exclamation-circle mr-1" style="color: #FF7221;"></i> Pending</td>
-                                    <?php
-                                    }else{ ?>
-                                    <td style="font-weight: 700; color: red;"><i class="fa fa-times-circle mr-1" style="color: red;"></i> Reject</td>
-                                    <?php } ?>
-                                </tr>
-                                
-                            <?php $no++;
-                            } ?>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </main>
         </div>
     </div>
 
@@ -468,7 +505,8 @@
             $("#navbar_phone").css("top", "-300px");
             $("body").css("overflow", "scroll");
         }
-    </script> 
+    </script>
+  
 
 </body>
 </html>
